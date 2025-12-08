@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Category;
+use App\Models\Game;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -23,7 +24,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        Category::factory()->create([
+        Category::factory()->createMany([
             [
                 'name' => 'Game of the year',
                 'description' => 'Users most beloved game of the year',
@@ -31,11 +32,23 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Not the game of the year',
                 'description' => 'Users absolutely not favourite game of the year',
-            ]
+            ],
         ]);
 
-        // Game::factory()->create([
-        //     []
-        // ]);
+        Game::factory()->createMany([
+            [
+                'title' => 'Elden Ring',
+                'description' => 'ouais',
+                'cover_image' => 'https://example.com/eldenring.jpg',
+                'developer' => 'FromSoftware',
+            ],
+            [
+                'title' => 'Hollow Knight',
+                'description' => 'ouaisn\'t',
+                'cover_image' => 'https://example.com/hollowknight.jpg',
+                'developer' => 'Team Cherry',
+            ],
+        ]);
+
     }
 }

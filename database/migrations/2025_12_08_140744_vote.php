@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create("votes", function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\app\Models\User::class )->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(\app\Models\Game::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(\app\Models\Category::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\User::class )->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Game::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Category::class)->constrained()->cascadeOnDelete();
         });
     }
 
