@@ -29,9 +29,13 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Users most beloved game of the year',
             ],
             [
-                'name'=> 'Not the game of the year',
-                'description'=> 'Users absolutely not favourite game of the year',
+                'name' => 'Not the game of the year',
+                'description' => 'Users absolutely not favourite game of the year',
             ]
         ]);
+
+        // Game::factory()->create([
+        //     []
+        // ]);
     }
 }
