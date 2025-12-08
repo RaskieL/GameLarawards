@@ -17,8 +17,8 @@ class CategoryGameFactory extends Factory
     public function definition(): array
     {
         return [
-            'category_id' => fake()->unique()->randomNumber(),
-            'game_id' => fake()->unique()->randomNumber(),
+            'category_id' => \App\Models\Category::inRandomOrder()->first()->id,
+            'game_id' => \App\Models\Game::inRandomOrder()->first()->id,
         ];
     }
 }
