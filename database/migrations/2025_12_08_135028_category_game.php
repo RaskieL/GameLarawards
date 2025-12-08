@@ -11,8 +11,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create("category_game", function (Blueprint $table) {
-            $table->foreignIdFor("\App\Models\Model\Category::class")->constrained()->cascadeOnDelete();
-            $table->foreignIdFor("\App\Models\Model\Game::class")->constrained()->cascadeOnDelete();
+            $table->foreignIdFor("\App\Models\Category::class")->constrained()->cascadeOnDelete();
+            $table->foreignIdFor("\App\Models\Game::class")->constrained()->cascadeOnDelete();
         });
     }
 
