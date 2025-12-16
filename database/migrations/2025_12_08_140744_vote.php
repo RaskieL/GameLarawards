@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\User::class )->constrained()->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\Game::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\Category::class)->constrained()->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 

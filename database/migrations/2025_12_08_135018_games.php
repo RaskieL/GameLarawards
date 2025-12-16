@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('description');
             $table->string("cover_image");
             $table->string("developer");
+            $table->timestamps();
         });
     }
 
@@ -24,7 +25,7 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('games');
 
     }
 };
