@@ -13,6 +13,8 @@ return new class extends Migration {
         Schema::create("category_game", function (Blueprint $table) {
             $table->foreignIdFor(\App\Models\Category::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\Game::class)->constrained()->cascadeOnDelete();
+
+            $table->primary(['category_id', 'game_id']);
         });
     }
 
