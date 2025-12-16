@@ -55,6 +55,10 @@ class AdminGameController extends Controller
             $game->categories()->sync($validated['categories']);
         }
 
+        if ($request->has('redirect_to_category')) {
+            return redirect()->route('categories.show', $request->input('redirect_to_category'))->with('success', 'Game created successfully.');
+        }
+
         return redirect()->route('games.index')->with('success', 'Game created successfully.');
     }
 
@@ -69,10 +73,11 @@ class AdminGameController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Game $game)
+    public function edit(Request $request, Game $game)
     {
         $categories = Category::all();
-        return view('admin.games.edit', compact('game', 'categories'));
+        $fromCategory = $request->query('from_category');
+        return view('admin.games.edit', compact('game', 'categories', 'fromCategory'));
     }
 
     /**
@@ -101,6 +106,10 @@ class AdminGameController extends Controller
 
         if (isset($validated['categories'])) {
             $game->categories()->sync($validated['categories']);
+        }
+
+        if ($request->has('redirect_to_category')) {
+            return redirect()->route('categories.show', $request->input('redirect_to_category'))->with('success', 'Game updated successfully.');
         }
 
         return redirect()->route('games.index')->with('success', 'Game updated successfully.');
