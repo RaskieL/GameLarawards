@@ -24,6 +24,6 @@ class Category extends Model
 
     public function games()
     {
-        return $this->hasMany(\App\Models\Game::class);
+        return $this->belongsToMany(\App\Models\Game::class);
     }
 }

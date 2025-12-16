@@ -19,7 +19,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
-    Route::resource('admin/categories', \App\Http\Controllers\AdminCategoryController::class)->except(['index', 'show']);
+    Route::resource('admin/categories', \App\Http\Controllers\AdminCategoryController::class)->except(['index']);
+    Route::resource('admin/games', \App\Http\Controllers\AdminGameController::class);
 });
 
 require __DIR__.'/auth.php';
