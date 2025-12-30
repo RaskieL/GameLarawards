@@ -14,7 +14,7 @@
                 @endif
             </h3>
 
-            <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200">
+            <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-gray-100">
                 {{ $category->games_count ?? 0 }} {{ ($category->games_count == 1) ? ('jeu') : ('jeux') }}
             </span>
         </div>
