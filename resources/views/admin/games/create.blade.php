@@ -1,3 +1,5 @@
+# no existia ruta para llevar aqui, entonces el problema como tal es en index.php y web.php
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -11,8 +13,8 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <form method="POST" action="{{ route('games.store') }}" enctype="multipart/form-data">
                         @csrf
-                        @if(isset($selectedCategory))
-                            <input type="hidden" name="redirect_to_category" value="{{ $selectedCategory }}">
+                        @if(request()->has('category'))
+                            <input type="hidden" name="redirect_to_category" value="{{ request('category') }}">
                         @endif
 
                         <!-- Title -->
@@ -49,8 +51,21 @@
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-2">
                                 @foreach($categories as $category)
                                     <div class="flex items-center">
-                                        <input id="category_{{ $category->id }}" type="checkbox" value="{{ $category->id }}" name="categories[]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" {{ (isset($selectedCategory) && $selectedCategory == $category->id) ? 'checked' : '' }}>
-                                        <label for="category_{{ $category->id }}" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $category->name }}</label>
+                                        <input id="category_{{ $category->id }}" 
+                                               type="checkbox" 
+                                               value="{{ $category->id }}" 
+                                               name="categories[]" 
+                                               class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                               {{ 
+                                                   (request()->has('category') && request('category') == $category->id) 
+                                                   || 
+                                                   (is_array(old('categories')) && in_array($category->id, old('categories')))
+                                                   ? 'checked' 
+                                                   : '' 
+                                               }}>
+                                        <label for="category_{{ $category->id }}" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                            {{ $category->name }}
+                                        </label>
                                     </div>
                                 @endforeach
                             </div>
@@ -58,8 +73,8 @@
                         </div>
 
                         <div class="flex items-center justify-end mt-4">
-                            @if(isset($selectedCategory))
-                                <a href="{{ route('categories.show', $selectedCategory) }}" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 transition ease-in-out duration-150">
+                            @if(request()->has('category'))
+                                <a href="{{ route('categories.show', request('category')) }}" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 transition ease-in-out duration-150">
                                     {{ __('Cancel') }}
                                 </a>
                             @else

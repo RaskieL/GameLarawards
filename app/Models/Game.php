@@ -21,4 +21,9 @@ class Game extends Model
     {
         return $this->belongsToMany(\App\Models\Category::class);
     }
+
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
 }
