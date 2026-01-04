@@ -30,77 +30,79 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div class="space-y-16">
             @foreach($categories as $category)
                 @php
                     $votedGameId = $userVotes[$category->id] ?? null;
                 @endphp
                 
                 <section class="relative" aria-labelledby="category-{{ $category->id }}">
-                    <div class="flex items-end justify-between mb-4 px-2">
+                    <div class="flex items-end justify-between mb-6 px-2">
                         <div>
                             <span class="text-[10px] font-bold text-purple-600 uppercase tracking-[0.2em]">Category</span>
-                            <h3 id="category-{{ $category->id }}" class="text-2xl font-black text-gray-800 dark:text-gray-100 leading-none uppercase bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                            <h3 id="category-{{ $category->id }}" class="text-3xl font-black text-gray-800 dark:text-gray-100 leading-none uppercase bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
                                 {{ $category->name }}
                             </h3>
                         </div>
                         @if($votedGameId)
-                            <span class="text-[10px] font-black bg-gradient-to-r from-green-500 to-emerald-500 text-white px-3 py-1 rounded-full shadow-lg animate-bounce">COMPLETE</span>
+                            <span class="text-xs font-black bg-green-500 text-light-gray dark:text-white px-4 py-1.5 rounded-full shadow-[0_0_15px_rgba(34,197,94,0.6)] border-2 border-black dark:border-white animate-pulse">COMPLETE</span>
                         @endif
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-gray-200 dark:scrollbar-track-gray-700 -mx-4 px-4 md:mx-0 md:px-0">
                         @foreach($category->games as $game)
-                            <form method="POST" action="{{ route('user.store') }}" class="h-full">
-                                @csrf
-                                <input type="hidden" name="category_id" value="{{ $category->id }}">
-                                <input type="hidden" name="game_id" value="{{ $game->id }}">
-                                
-                                <button type="submit" @disabled($votedGameId && $votedGameId != $game->id)
-                                    class="relative w-full h-full text-left group overflow-hidden rounded-2xl border-2 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-purple-500/50
-                                    {{ $votedGameId == $game->id 
-                                        ? 'border-purple-500 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 ring-4 ring-purple-500/20 shadow-xl shadow-purple-500/30' 
-                                        : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-purple-400 dark:hover:border-purple-500 hover:shadow-lg hover:shadow-purple-500/20' }}
-                                    {{ $votedGameId && $votedGameId != $game->id ? 'opacity-40 grayscale scale-[0.98]' : 'hover:scale-[1.02] hover:rotate-1' }}"
-                                    aria-label="Vote for {{ $game->title }}">
+                            <div class="w-[85vw] sm:w-[400px] snap-center shrink-0">
+                                <form method="POST" action="{{ route('user.store') }}" class="h-full">
+                                    @csrf
+                                    <input type="hidden" name="category_id" value="{{ $category->id }}">
+                                    <input type="hidden" name="game_id" value="{{ $game->id }}">
                                     
-                                    <div class="flex flex-col h-full">
-                                        <div class="aspect-[16/9] overflow-hidden relative">
-                                            <img src="{{ asset('storage/' . $game->cover_image) }}" 
-                                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 group-hover:brightness-110" 
-                                                 alt="{{ $game->title }}">
-                                            
-                                            @if($votedGameId == $game->id)
-                                                <div class="absolute inset-0 bg-gradient-to-br from-purple-600/30 to-blue-600/30 backdrop-blur-[2px] flex items-center justify-center animate-fade-in">
-                                                    <div class="bg-white text-purple-600 rounded-full p-3 shadow-xl animate-pulse">
-                                                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+                                    <button type="submit" @disabled($votedGameId && $votedGameId != $game->id)
+                                        class="relative w-full h-full text-left group overflow-hidden rounded-2xl border-2 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-purple-500/50
+                                        {{ $votedGameId == $game->id 
+                                            ? 'border-purple-500 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 ring-4 ring-purple-500/20 shadow-xl shadow-purple-500/30' 
+                                            : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-purple-400 dark:hover:border-purple-500 hover:shadow-lg hover:shadow-purple-500/20' }}
+                                        {{ $votedGameId && $votedGameId != $game->id ? 'opacity-40 grayscale scale-[0.98]' : 'hover:scale-[1.02] hover:rotate-1' }}"
+                                        aria-label="Vote for {{ $game->title }}">
+                                        
+                                        <div class="flex flex-col h-full">
+                                            <div class="aspect-[16/9] overflow-hidden relative">
+                                                <img src="{{ asset('storage/' . $game->cover_image) }}" 
+                                                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 group-hover:brightness-110" 
+                                                     alt="{{ $game->title }}">
+                                                
+                                                @if($votedGameId == $game->id)
+                                                    <div class="absolute inset-0 bg-gradient-to-br from-purple-600/30 to-blue-600/30 backdrop-blur-[2px] flex items-center justify-center animate-fade-in">
+                                                        <div class="bg-white text-purple-600 rounded-full p-3 shadow-xl animate-pulse">
+                                                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            @endif
-                                        </div>
-
-                                        <div class="p-4 flex-grow flex flex-col justify-between">
-                                            <div>
-                                                <h4 class="font-black text-gray-900 dark:text-white text-lg leading-tight mb-1 group-hover:text-purple-600 transition-colors duration-300">
-                                                    {{ $game->title }}
-                                                </h4>
-                                                <p class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">
-                                                    {{ $game->developer }}
-                                                </p>
+                                                @endif
                                             </div>
 
-                                            @if($votedGameId == $game->id)
-                                                <div class="mt-4 pt-4 border-t border-purple-200 dark:border-purple-800">
-                                                    <span class="text-xs font-black text-purple-600 dark:text-purple-400 flex items-center gap-1 uppercase animate-pulse">
-                                                        <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
-                                                        Vote Confirmed
-                                                    </span>
+                                            <div class="p-4 flex-grow flex flex-col justify-between">
+                                                <div>
+                                                    <h4 class="font-black text-gray-900 dark:text-white text-lg leading-tight mb-1 group-hover:text-purple-600 transition-colors duration-300 line-clamp-2">
+                                                        {{ $game->title }}
+                                                    </h4>
+                                                    <p class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">
+                                                        {{ $game->developer }}
+                                                    </p>
                                                 </div>
-                                            @endif
+
+                                                @if($votedGameId == $game->id)
+                                                    <div class="mt-4 pt-4 border-t border-purple-200 dark:border-purple-800">
+                                                        <span class="text-xs font-black text-purple-600 dark:text-purple-400 flex items-center gap-1 uppercase animate-pulse">
+                                                            <span class="w-2 h-2 bg-purple-500 rounded-full"></span>
+                                                            Vote Confirmed
+                                                        </span>
+                                                    </div>
+                                                @endif
+                                            </div>
                                         </div>
-                                    </div>
-                                </button>
-                            </form>
+                                    </button>
+                                </form>
+                            </div>
                         @endforeach
                     </div>
 
