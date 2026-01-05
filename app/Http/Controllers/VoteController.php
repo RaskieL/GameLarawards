@@ -61,12 +61,19 @@ class VoteController extends Controller
      */
     public function results()
     {
-        // Get categories with games ordered by vote count descending
-        $categories = Category::with([
-            'games' => function ($query) {
-                $query->withCount('votes')->orderBy('votes_count', 'desc');
-            }
-        ])->get();
+        $categories = Category::all();
+
+        // Load games for each category with vote count specific to that category
+        foreach ($categories as $category) {
+            $games = $category->games()
+                ->withCount(['votes' => function ($query) use ($category) {
+                    $query->where('category_id', $category->id);
+                }])
+                ->orderBy('votes_count', 'desc')
+                ->get();
+            
+            $category->setRelation('games', $games);
+        }
 
         return view('user.results', compact('categories'));
     }

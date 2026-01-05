@@ -151,5 +151,45 @@ class DatabaseSeeder extends Seeder
                 'developer' => 'Zeekerss',
             ],
         ]);
+
+        // Link Games to Categories
+        $goty = Category::where('name', 'Game of the Year')->first();
+        $indie = Category::where('name', 'Best Indie Game')->first();
+        $narrative = Category::where('name', 'Best Narrative')->first();
+        $art = Category::where('name', 'Best Art Direction')->first();
+        $soundtrack = Category::where('name', 'Best Soundtrack')->first();
+        $multiplayer = Category::where('name', 'Best Multiplayer')->first();
+        $rpg = Category::where('name', 'Best RPG')->first();
+        $action = Category::where('name', 'Best Action Game')->first();
+        $innovation = Category::where('name', 'Best Innovation')->first();
+        $playersChoice = Category::where('name', "Players' Choice")->first();
+
+        $eldenRing = Game::where('title', 'Elden Ring')->first();
+        $gow = Game::where('title', 'God of War: Ragnarok')->first();
+        $zelda = Game::where('title', 'The Legend of Zelda: Tears of the Kingdom')->first();
+        $bg3 = Game::where('title', "Baldur's Gate 3")->first();
+        $cyberpunk = Game::where('title', 'Cyberpunk 2077: Phantom Liberty')->first();
+        $hollowKnight = Game::where('title', 'Hollow Knight: Silksong')->first();
+        $hades2 = Game::where('title', 'Hades II')->first();
+        $alanWake2 = Game::where('title', 'Alan Wake 2')->first();
+        $ff16 = Game::where('title', 'Final Fantasy XVI')->first();
+        $hifiRush = Game::where('title', 'Hi-Fi Rush')->first();
+        $lethalCompany = Game::where('title', 'Lethal Company')->first();
+
+        // Attach categories if they exist (safety check)
+        if ($eldenRing) $eldenRing->categories()->attach([$goty->id, $rpg->id, $art->id, $playersChoice->id]);
+        if ($gow) $gow->categories()->attach([$goty->id, $narrative->id, $action->id, $soundtrack->id]);
+        if ($zelda) $zelda->categories()->attach([$goty->id, $action->id, $innovation->id, $playersChoice->id]);
+        if ($bg3) $bg3->categories()->attach([$goty->id, $rpg->id, $narrative->id, $playersChoice->id]);
+        if ($cyberpunk) $cyberpunk->categories()->attach([$rpg->id, $narrative->id, $art->id]);
+        
+        if ($hollowKnight) $hollowKnight->categories()->attach([$indie->id, $art->id, $action->id]);
+        if ($hades2) $hades2->categories()->attach([$indie->id, $action->id, $art->id]);
+        
+        if ($alanWake2) $alanWake2->categories()->attach([$narrative->id, $art->id, $soundtrack->id]);
+        if ($ff16) $ff16->categories()->attach([$rpg->id, $soundtrack->id, $action->id]);
+        
+        if ($hifiRush) $hifiRush->categories()->attach([$action->id, $art->id, $soundtrack->id, $innovation->id]);
+        if ($lethalCompany) $lethalCompany->categories()->attach([$indie->id, $multiplayer->id, $playersChoice->id]);
     }
 }

@@ -96,7 +96,7 @@
                 </div>
                 <div class="text-center">
                     <span class="text-2xl font-black text-purple-600 dark:text-purple-400">{{ $categories->sum(fn($cat) => $cat->games->count()) }}</span>
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Games</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Nominated Games</p>
                 </div>
                 <div class="text-center">
                     <span class="text-2xl font-black text-purple-600 dark:text-purple-400">{{ $categories->sum(fn($cat) => $cat->games->sum('votes_count')) }}</span>
