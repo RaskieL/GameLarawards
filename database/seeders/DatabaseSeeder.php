@@ -120,6 +120,24 @@ class DatabaseSeeder extends Seeder
                 'cover_image' => 'games/hades_2.jpg',
                 'developer' => 'Supergiant Games',
             ],
+            [
+                'title' => 'Sea of Stars',
+                'description' => 'Beautiful retro-inspired RPG with modern gameplay',
+                'cover_image' => 'games/sea_of_stars.jpg',
+                'developer' => 'Sabotage Studio',
+            ],
+            [
+                'title' => 'Cocoon',
+                'description' => 'Puzzle adventure from the lead gameplay designer of Limbo and Inside',
+                'cover_image' => 'games/cocoon.jpg',
+                'developer' => 'Geometric Interactive',
+            ],
+            [
+                'title' => 'Dredge',
+                'description' => 'Lovecraftian fishing adventure with haunting atmosphere',
+                'cover_image' => 'games/dredge.jpg',
+                'developer' => 'Black Salt Games',
+            ],
 
             // Narrative Games
             [
@@ -127,6 +145,12 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Survival horror with mind-bending narrative',
                 'cover_image' => 'games/alan_wake_2.jpg',
                 'developer' => 'Remedy Entertainment',
+            ],
+            [
+                'title' => 'Marvel\'s Spider-Man 2',
+                'description' => 'Dual-hero story with emotional depth',
+                'cover_image' => 'games/spiderman_2.jpg',
+                'developer' => 'Insomniac Games',
             ],
             [
                 'title' => 'Final Fantasy XVI',
@@ -142,8 +166,20 @@ class DatabaseSeeder extends Seeder
                 'cover_image' => 'games/hifi_rush.jpg',
                 'developer' => 'Tango Gameworks',
             ],
+            [
+                'title' => 'Viewfinder',
+                'description' => 'Mind-bending puzzle game about perspective',
+                'cover_image' => 'games/viewfinder.jpg',
+                'developer' => 'Sad Owl Studios',
+            ],
 
             // Multiplayer Games
+            [
+                'title' => 'Street Fighter 6',
+                'description' => 'Fighting game with incredible depth and accessibility',
+                'cover_image' => 'games/street_fighter_6.jpg',
+                'developer' => 'Capcom',
+            ],
             [
                 'title' => 'Lethal Company',
                 'description' => 'Co-op horror comedy about collecting scrap',
@@ -151,5 +187,30 @@ class DatabaseSeeder extends Seeder
                 'developer' => 'Zeekerss',
             ],
         ]);
+
+        $categories = Category::all();
+        $games = Game::all();
+
+        $games[0]->categories()->attach([1, 4, 7, 9]); // Elden Ring: GOTY, Art, RPG, Innovation
+        $games[1]->categories()->attach([1, 3, 8]); // God of War: GOTY, Narrative, Action
+        $games[2]->categories()->attach([1, 4, 9]); // Zelda: GOTY, Art, Innovation
+        $games[3]->categories()->attach([1, 3, 7]); // Baldur's Gate: GOTY, Narrative, RPG
+        $games[4]->categories()->attach([1, 3, 9]); // Cyberpunk: GOTY, Narrative, Innovation
+
+        $games[5]->categories()->attach([2, 4]); // Hollow Knight: Indie, Art
+        $games[6]->categories()->attach([2, 7]); // Hades II: Indie, RPG
+        $games[7]->categories()->attach([2, 5]); // Sea of Stars: Indie, Soundtrack
+        $games[8]->categories()->attach([2, 4, 9]); // Cocoon: Indie, Art, Innovation
+        $games[9]->categories()->attach([2, 3]); // Dredge: Indie, Narrative
+
+        $games[10]->categories()->attach([3, 5]); // Alan Wake 2: Narrative, Soundtrack
+        $games[11]->categories()->attach([3, 8]); // Spider-Man 2: Narrative, Action
+        $games[12]->categories()->attach([3, 5, 7]); // FF XVI: Narrative, Soundtrack, RPG
+
+        $games[13]->categories()->attach([4, 5, 9]); // Hi-Fi Rush: Art, Soundtrack, Innovation
+        $games[14]->categories()->attach([4, 9]); // Viewfinder: Art, Innovation
+
+        $games[15]->categories()->attach([6, 10]); // Street Fighter 6: Multiplayer, Players' Choice
+        $games[16]->categories()->attach([6, 10]); // Lethal Company: Multiplayer, Players' Choice
     }
 }
