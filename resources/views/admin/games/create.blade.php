@@ -1,4 +1,4 @@
-# no existia ruta para llevar aqui, entonces el problema como tal es en index.php y web.php
+
 
 <x-app-layout>
     <x-slot name="header">
