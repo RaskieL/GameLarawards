@@ -120,6 +120,24 @@ class DatabaseSeeder extends Seeder
                 'cover_image' => 'games/hades_2.jpg',
                 'developer' => 'Supergiant Games',
             ],
+            [
+                'title' => 'Sea of Stars',
+                'description' => 'Beautiful retro-inspired RPG with modern gameplay',
+                'cover_image' => 'games/sea_of_stars.jpg',
+                'developer' => 'Sabotage Studio',
+            ],
+            [
+                'title' => 'Cocoon',
+                'description' => 'Puzzle adventure from the lead gameplay designer of Limbo and Inside',
+                'cover_image' => 'games/cocoon.jpg',
+                'developer' => 'Geometric Interactive',
+            ],
+            [
+                'title' => 'Dredge',
+                'description' => 'Lovecraftian fishing adventure with haunting atmosphere',
+                'cover_image' => 'games/dredge.jpg',
+                'developer' => 'Black Salt Games',
+            ],
 
             // Narrative Games
             [
@@ -127,6 +145,12 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Survival horror with mind-bending narrative',
                 'cover_image' => 'games/alan_wake_2.jpg',
                 'developer' => 'Remedy Entertainment',
+            ],
+            [
+                'title' => 'Marvel\'s Spider-Man 2',
+                'description' => 'Dual-hero story with emotional depth',
+                'cover_image' => 'games/spiderman_2.jpg',
+                'developer' => 'Insomniac Games',
             ],
             [
                 'title' => 'Final Fantasy XVI',
@@ -142,8 +166,20 @@ class DatabaseSeeder extends Seeder
                 'cover_image' => 'games/hifi_rush.jpg',
                 'developer' => 'Tango Gameworks',
             ],
+            [
+                'title' => 'Viewfinder',
+                'description' => 'Mind-bending puzzle game about perspective',
+                'cover_image' => 'games/viewfinder.jpg',
+                'developer' => 'Sad Owl Studios',
+            ],
 
             // Multiplayer Games
+            [
+                'title' => 'Street Fighter 6',
+                'description' => 'Fighting game with incredible depth and accessibility',
+                'cover_image' => 'games/street_fighter_6.jpg',
+                'developer' => 'Capcom',
+            ],
             [
                 'title' => 'Lethal Company',
                 'description' => 'Co-op horror comedy about collecting scrap',
@@ -152,44 +188,29 @@ class DatabaseSeeder extends Seeder
             ],
         ]);
 
-        // Link Games to Categories
-        $goty = Category::where('name', 'Game of the Year')->first();
-        $indie = Category::where('name', 'Best Indie Game')->first();
-        $narrative = Category::where('name', 'Best Narrative')->first();
-        $art = Category::where('name', 'Best Art Direction')->first();
-        $soundtrack = Category::where('name', 'Best Soundtrack')->first();
-        $multiplayer = Category::where('name', 'Best Multiplayer')->first();
-        $rpg = Category::where('name', 'Best RPG')->first();
-        $action = Category::where('name', 'Best Action Game')->first();
-        $innovation = Category::where('name', 'Best Innovation')->first();
-        $playersChoice = Category::where('name', "Players' Choice")->first();
+        $categories = Category::all();
+        $games = Game::all();
 
-        $eldenRing = Game::where('title', 'Elden Ring')->first();
-        $gow = Game::where('title', 'God of War: Ragnarok')->first();
-        $zelda = Game::where('title', 'The Legend of Zelda: Tears of the Kingdom')->first();
-        $bg3 = Game::where('title', "Baldur's Gate 3")->first();
-        $cyberpunk = Game::where('title', 'Cyberpunk 2077: Phantom Liberty')->first();
-        $hollowKnight = Game::where('title', 'Hollow Knight: Silksong')->first();
-        $hades2 = Game::where('title', 'Hades II')->first();
-        $alanWake2 = Game::where('title', 'Alan Wake 2')->first();
-        $ff16 = Game::where('title', 'Final Fantasy XVI')->first();
-        $hifiRush = Game::where('title', 'Hi-Fi Rush')->first();
-        $lethalCompany = Game::where('title', 'Lethal Company')->first();
+        $games[0]->categories()->attach([1, 4, 7, 9]); // Elden Ring: GOTY, Art, RPG, Innovation
+        $games[1]->categories()->attach([1, 3, 8]); // God of War: GOTY, Narrative, Action
+        $games[2]->categories()->attach([1, 4, 9]); // Zelda: GOTY, Art, Innovation
+        $games[3]->categories()->attach([1, 3, 7]); // Baldur's Gate: GOTY, Narrative, RPG
+        $games[4]->categories()->attach([1, 3, 9]); // Cyberpunk: GOTY, Narrative, Innovation
 
-        // Attach categories if they exist (safety check)
-        if ($eldenRing) $eldenRing->categories()->attach([$goty->id, $rpg->id, $art->id, $playersChoice->id]);
-        if ($gow) $gow->categories()->attach([$goty->id, $narrative->id, $action->id, $soundtrack->id]);
-        if ($zelda) $zelda->categories()->attach([$goty->id, $action->id, $innovation->id, $playersChoice->id]);
-        if ($bg3) $bg3->categories()->attach([$goty->id, $rpg->id, $narrative->id, $playersChoice->id]);
-        if ($cyberpunk) $cyberpunk->categories()->attach([$rpg->id, $narrative->id, $art->id]);
-        
-        if ($hollowKnight) $hollowKnight->categories()->attach([$indie->id, $art->id, $action->id]);
-        if ($hades2) $hades2->categories()->attach([$indie->id, $action->id, $art->id]);
-        
-        if ($alanWake2) $alanWake2->categories()->attach([$narrative->id, $art->id, $soundtrack->id]);
-        if ($ff16) $ff16->categories()->attach([$rpg->id, $soundtrack->id, $action->id]);
-        
-        if ($hifiRush) $hifiRush->categories()->attach([$action->id, $art->id, $soundtrack->id, $innovation->id]);
-        if ($lethalCompany) $lethalCompany->categories()->attach([$indie->id, $multiplayer->id, $playersChoice->id]);
+        $games[5]->categories()->attach([2, 4]); // Hollow Knight: Indie, Art
+        $games[6]->categories()->attach([2, 7]); // Hades II: Indie, RPG
+        $games[7]->categories()->attach([2, 5]); // Sea of Stars: Indie, Soundtrack
+        $games[8]->categories()->attach([2, 4, 9]); // Cocoon: Indie, Art, Innovation
+        $games[9]->categories()->attach([2, 3]); // Dredge: Indie, Narrative
+
+        $games[10]->categories()->attach([3, 5]); // Alan Wake 2: Narrative, Soundtrack
+        $games[11]->categories()->attach([3, 8]); // Spider-Man 2: Narrative, Action
+        $games[12]->categories()->attach([3, 5, 7]); // FF XVI: Narrative, Soundtrack, RPG
+
+        $games[13]->categories()->attach([4, 5, 9]); // Hi-Fi Rush: Art, Soundtrack, Innovation
+        $games[14]->categories()->attach([4, 9]); // Viewfinder: Art, Innovation
+
+        $games[15]->categories()->attach([6, 10]); // Street Fighter 6: Multiplayer, Players' Choice
+        $games[16]->categories()->attach([6, 10]); // Lethal Company: Multiplayer, Players' Choice
     }
 }
